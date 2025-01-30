@@ -5,6 +5,8 @@ let pendingTask = [];
 let taskCompleted = [];
 let completadas = document.querySelector('.completadas');
 
+// Llamar a `loadTasks` cuando la página cargue
+document.addEventListener('DOMContentLoaded', loadTasks);
 
 function getInput(){
 
@@ -44,6 +46,7 @@ function createElement(task) {
     // Agrega la tarea a la lista de pendientes
     pendingTask.push(task);
     console.log(pendingTask);
+    saveTask(task);
 
     // Crear botón de eliminar
     let moreOptionsDiv = document.createElement('div');
@@ -64,6 +67,11 @@ function createElement(task) {
         event.stopPropagation(); // Evita que el evento de `click` en `div` se active también
         div.remove(); // Elimina la tarea del DOM
         moreOptionsDiv.style.display='none';
+
+        // Remover del `localStorage`
+        let tasks = JSON.parse(localStorage.getItem('Tareas')) || [];
+        tasks = tasks.filter(t => t !== task);
+        localStorage.setItem('Tareas', JSON.stringify(tasks));
     });
 
     // Listener para manejar cuando se complete una tarea
@@ -151,6 +159,35 @@ function moveToPending(task, taskElement){
         createElement(task);
     }, 500);
 }
+
+
+function saveTask(task) {
+    let tasks = JSON.parse(localStorage.getItem('Tareas')) || [];
+
+    // Evitar duplicados en `localStorage`
+    if (!tasks.includes(task)) {
+        tasks.push(task);
+        localStorage.setItem('Tareas', JSON.stringify(tasks));
+    }
+}
+
+
+function loadTasks() {
+    let tasks = JSON.parse(localStorage.getItem('Tareas')) || [];
+    
+    // Verificar si la tarea ya está en el DOM antes de agregarla
+    let existingTasks = [...document.querySelectorAll('.item p')].map(p => p.textContent);
+
+    tasks.forEach(task => {
+        if (!existingTasks.includes(task)) {
+            createElement(task);
+        }
+    });
+}
+
+
+
+
 
 
 getInput();
