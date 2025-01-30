@@ -45,27 +45,50 @@ function createElement(task) {
     pendingTask.push(task);
     console.log(pendingTask);
 
-    // Listener para manejar cuando se complete una tarea
-checkbox.addEventListener('click', () => {
-    let taskIndexPending = pendingTask.indexOf(task);
-    let taskIndexCompleted = taskCompleted.indexOf(task);
+// Crear botón de eliminar
+let moreOptionsDiv = document.createElement('div');
+moreOptionsDiv.classList.add('delete-btn');
+moreOptionsDiv.textContent = 'Eliminar';
+moreOptionsDiv.style.display = 'none'; // Inicialmente oculto
 
-    if (taskIndexPending !== -1) { 
-        // Si la tarea está en `pendingTask` y se marca como completada
-        if (checkbox.checked) {
-            checkbox.classList.add('changeColor');
-            p.classList.add('checked');
-            moveToCompleted(task, div);  
-        }
-    } else if (taskIndexCompleted !== -1) { 
-        // Si la tarea está en `taskCompleted` y se desmarca para volver a pendientes
-        if (!checkbox.checked) {
-            checkbox.classList.remove('changeColor');
-            p.classList.remove('checked');
-            moveToPending(task, div);  
-        }
-    }
+// Agregar el botón dentro del div de la tarea
+div.appendChild(moreOptionsDiv);
+
+// Evento para mostrar/ocultar el botón de eliminar al hacer clic en la tarea
+div.addEventListener('click', () => {
+    moreOptionsDiv.style.display = moreOptionsDiv.style.display === 'none' ? 'block' : 'none';
 });
+
+// Evento para eliminar la tarea al hacer clic en el botón de eliminar
+moreOptionsDiv.addEventListener('click', (event) => {
+    event.stopPropagation(); // Evita que el evento de `click` en `div` se active también
+    div.remove(); // Elimina la tarea del DOM
+});
+
+
+
+
+    // Listener para manejar cuando se complete una tarea
+    checkbox.addEventListener('click', () => {
+        let taskIndexPending = pendingTask.indexOf(task);
+        let taskIndexCompleted = taskCompleted.indexOf(task);
+
+        if (taskIndexPending !== -1) { 
+            // Si la tarea está en `pendingTask` y se marca como completada
+            if (checkbox.checked) {
+                checkbox.classList.add('changeColor');
+                p.classList.add('checked');
+                moveToCompleted(task, div);  
+            }
+        } else if (taskIndexCompleted !== -1) { 
+            // Si la tarea está en `taskCompleted` y se desmarca para volver a pendientes
+            if (!checkbox.checked) {
+                checkbox.classList.remove('changeColor');
+                p.classList.remove('checked');
+                moveToPending(task, div);  
+            }
+        }
+    });
 }
 
 function moveToCompleted(task, div) {
@@ -129,7 +152,5 @@ function moveToPending(task, taskElement){
     }, 500);
 }
 
-function moveToTrash(){
-    
-}
+
 getInput();

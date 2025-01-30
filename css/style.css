@@ -10,6 +10,13 @@ body{
     font-weight: 200;
     font-style: normal;
 }
+#taskList{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+ 
+}
+
 #taskInput{
     width:100%;
     appearance: none;
@@ -25,6 +32,18 @@ body{
 }
 #taskInput:hover{
     background-color: whitesmoke;
+}
+.delete-btn{
+    flex: end;
+    align-self: flex-end;
+    background-color: red;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    margin: 10px 0px;
+}
+.show-delete-btn{
+    display: block;
 }
 .container-wrapper{
     padding: 0px 10px;
