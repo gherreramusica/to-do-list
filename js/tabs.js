@@ -2,24 +2,23 @@
 let tabs = document.querySelectorAll('.tab');
 let tabContents = document.querySelectorAll('.tab-content');
 
-// Itera sobre cada pestaña para agregar el evento de clic
-tabs.forEach((tab) => {
+
+tabs.forEach((tab, index) => {
+
   tab.addEventListener('click', () => {
-    // Remueve la clase 'active' de todas las pestañas y oculta su contenido
-    tabs.forEach(t => t.classList.remove('active'));
-    tabContents.forEach(content => (content.style.display = 'none'));
+    //REMOVE ACTIVE CLASS
+    tabs.forEach((tab) => tab.classList.remove('active') )
 
-    // Agrega la clase 'active' a la pestaña seleccionada
+    tabContents.forEach((content) => content.classList.remove('active'));
+
+    //ADD ACTIVE CLASS TO INDEX
     tab.classList.add('active');
+    tabContents[index].classList.add('active');
+  })
 
-    // Muestra el contenido correspondiente usando data-target
-    const targetId = tab.getAttribute('data-target');
-    const targetContent = document.getElementById(targetId);
-    if (targetContent) {
-      targetContent.style.display = 'block';
-    }
-  });
-});
+})
+
+
 
 
 

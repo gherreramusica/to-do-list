@@ -7,9 +7,11 @@ let completadas = document.querySelector('.completadas');
 
 
 function getInput(){
+
     taskInput.addEventListener('keydown', (e) => {
         if(e.key === 'Enter' && taskInput.value !== ""){
             let task = taskInput.value;
+
 
             console.log(task);
             createElement(task);
@@ -44,43 +46,90 @@ function createElement(task) {
     console.log(pendingTask);
 
     // Listener para manejar cuando se complete una tarea
-    checkbox.addEventListener('click', () => {
-        checkbox.classList.toggle('changeColor');
-        p.classList.toggle('checked');
-        
-        // Mueve el elemento a la lista de completadas después de 500ms
-        setTimeout(() => {
-            // Elimina la tarea de pendientes
-            const taskIndex = pendingTask.indexOf(task);
-            if (taskIndex !== -1) {
-                pendingTask.splice(taskIndex, 1);
-            }
-            
-            // Agrega la tarea a completadas
-            taskCompleted.push(task);
-            console.log(taskCompleted);
+checkbox.addEventListener('click', () => {
+    let taskIndexPending = pendingTask.indexOf(task);
+    let taskIndexCompleted = taskCompleted.indexOf(task);
 
-            // Remueve el div de la lista de pendientes
-            div.remove();
-
-            // Crea un nuevo elemento para completadas
-            let completedDiv = document.createElement('div');
-            completedDiv.classList.add('item');
-            
-            let completedCheckbox = document.createElement('input');
-            completedCheckbox.type = 'checkbox';
-            completedCheckbox.checked = true;
-            completedCheckbox.classList.add('checkbox');
-
-            let completedP = document.createElement('p');
-            completedP.textContent = task;
-
-            completedDiv.appendChild(completedCheckbox);
-            completedDiv.appendChild(completedP);
-
-            completadas.appendChild(completedDiv);
-        }, 500);
-    });
+    if (taskIndexPending !== -1) { 
+        // Si la tarea está en `pendingTask` y se marca como completada
+        if (checkbox.checked) {
+            checkbox.classList.add('changeColor');
+            p.classList.add('checked');
+            moveToCompleted(task, div);  
+        }
+    } else if (taskIndexCompleted !== -1) { 
+        // Si la tarea está en `taskCompleted` y se desmarca para volver a pendientes
+        if (!checkbox.checked) {
+            checkbox.classList.remove('changeColor');
+            p.classList.remove('checked');
+            moveToPending(task, div);  
+        }
+    }
+});
 }
 
+function moveToCompleted(task, div) {
+    // Mueve el elemento a la lista de completadas después de 500ms
+    setTimeout(() => {
+        // Elimina la tarea de pendientes
+        const taskIndex = pendingTask.indexOf(task);
+        if (taskIndex !== -1) {
+            pendingTask.splice(taskIndex, 1);
+        }
+        
+        // Agrega la tarea a completadas
+        taskCompleted.push(task);
+        console.log(taskCompleted);
+
+        // Remueve el div de la lista de pendientes
+        div.remove();
+
+        // Crea un nuevo elemento para completadas
+        let completedDiv = document.createElement('div');
+        completedDiv.classList.add('item');
+        
+        let completedCheckbox = document.createElement('input');
+        completedCheckbox.type = 'checkbox';
+        completedCheckbox.checked = true;
+        completedCheckbox.classList.add('checkbox', 'changeColor');
+
+        let completedP = document.createElement('p');
+        completedP.textContent = task;
+
+        completedDiv.appendChild(completedCheckbox);
+        completedDiv.appendChild(completedP);
+
+        completadas.appendChild(completedDiv);
+
+        completedCheckbox.addEventListener('click', () => {
+
+                completedCheckbox.classList.toggle('changeColor');
+                completedP.classList.toggle('checked');
+                moveToPending(task, completedDiv);
+        })
+    }, 500);
+}
+
+function moveToPending(task, taskElement){
+    setTimeout(() => {
+        // Elimina la tarea de completadas
+        const taskIndex = taskCompleted.indexOf(task);
+        if (taskIndex !== -1) {
+            taskCompleted.splice(taskIndex, 1);
+        }
+
+        // Agrega la tarea nuevamente a la lista de pendientes
+        pendingTask.push(task);
+
+        // Remueve la tarea de la lista de completadas
+        taskElement.remove();
+
+        // Crea un nuevo elemento en la lista de pendientes
+        createElement(task);
+    }, 500);
+}
+
+function moveToTrash(){
+    
+}
 getInput();

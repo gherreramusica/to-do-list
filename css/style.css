@@ -77,8 +77,18 @@ ul li{
 .changeColor{
     background-color: silver;
 }
-.active{
-    display: block !important;
+
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active{
+    display: block;
+}
+
+.tab.active{
+    border: 1px solid silver;
 }
 
 
