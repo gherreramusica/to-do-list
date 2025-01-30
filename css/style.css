@@ -11,10 +11,8 @@ body{
     font-style: normal;
 }
 #taskList{
-    display: flex;
     flex-direction: column;
     justify-content: center;
- 
 }
 
 #taskInput{
@@ -34,13 +32,13 @@ body{
     background-color: whitesmoke;
 }
 .delete-btn{
-    flex: end;
-    align-self: flex-end;
+text-align: center;
     background-color: red;
     padding: 5px;
     border-radius: 10px;
     color: white;
     margin: 10px 0px;
+    cursor: pointer;
 }
 .show-delete-btn{
     display: block;
@@ -98,12 +96,13 @@ ul li{
 }
 
 
-.tab-content {
-    display: none;
-}
+
 
 .tab-content.active{
     display: block;
+}
+.tab-content {
+    display: none;
 }
 
 .tab.active{
