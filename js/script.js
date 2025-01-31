@@ -32,19 +32,19 @@ function createElement(task) {
     // Agrega elementos al contenedor
     div.appendChild(checkbox);
     div.appendChild(p);
-    // Agrega el contenedor a la lista de tareas pendientes
-    taskList.prepend(div);
-    // Agrega la tarea a la lista de pendientes
-    pendingTask.push(task);
-    pendingTask.reverse();
-    saveTask(task);
     // Crear botón de eliminar
     let moreOptionsDiv = document.createElement('div');
     moreOptionsDiv.classList.add('delete-btn');
     moreOptionsDiv.textContent = 'Eliminar';
     moreOptionsDiv.style.display = 'none'; // Inicialmente oculto
     // Agregar el botón dentro del div de la tarea
-    taskList.appendChild(moreOptionsDiv);
+    taskList.prepend(moreOptionsDiv);
+    // Agrega el contenedor a la lista de tareas pendientes
+    taskList.prepend(div);
+    // Agrega la tarea a la lista de pendientes
+    pendingTask.push(task);
+    pendingTask.reverse();
+    saveTask(task);
     // Evento para mostrar/ocultar el botón de eliminar al hacer clic en la tarea
     div.addEventListener('click', () => {
         moreOptionsDiv.style.display = moreOptionsDiv.style.display === 'none' ? 'block' : 'none';
