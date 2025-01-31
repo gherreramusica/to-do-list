@@ -33,10 +33,10 @@ function createElement(task) {
     div.appendChild(checkbox);
     div.appendChild(p);
     // Agrega el contenedor a la lista de tareas pendientes
-    taskList.appendChild(div);
+    taskList.prepend(div);
     // Agrega la tarea a la lista de pendientes
     pendingTask.push(task);
-    console.log(pendingTask);
+    pendingTask.reverse();
     saveTask(task);
     // Crear botón de eliminar
     let moreOptionsDiv = document.createElement('div');
@@ -107,7 +107,7 @@ function moveToCompleted(task, div) {
         completedP.textContent = task;
         completedDiv.appendChild(completedCheckbox);
         completedDiv.appendChild(completedP);
-        completadas.appendChild(completedDiv);
+        completadas.prepend(completedDiv);
         completedCheckbox.addEventListener('click', () => {
                 completedCheckbox.classList.toggle('changeColor');
                 completedP.classList.toggle('checked');
@@ -149,13 +149,18 @@ function loadTasks() {
     });
 }
 getInput();
-taskInput.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' && completadas.classList.contains('active')){ //das click, se deteca el enter y si es que tab completadas esta con la clase activo.
+taskInput.addEventListener('keyup', (e) => {
+    if(e.key === 'Enter' && completadas.classList.contains('active')) { //das click, se deteca el enter y si es que tab completadas esta con la clase activo y si el valor del input no esta vacio.
         tab.forEach((item) => item.classList.remove('active')); //se remueve la clase de tab completadas y se agrega la clase a tab todas
         tabContent.forEach(content => content.classList.remove('active'));    //limpiar clase active en tabcontent.
         tabTodas.classList.add('active');//agregar clase active a tab todas.
         taskList.classList.add('active');// agrgar clase activa al tab content de tasklist
     }
 })
+
+
+
+
+
 
 
