@@ -1,5 +1,5 @@
 // Selecciona todas las pestañas y el contenido de las pestañas
-let tabs = document.querySelectorAll('.tab');
+const tabs = document.querySelectorAll('.tab');
 let tabContents = document.querySelectorAll('.tab-content');
 
 
@@ -17,6 +17,8 @@ tabs.forEach((tab, index) => {
   })
 
 })
+
+
 
 
 
