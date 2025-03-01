@@ -148,7 +148,6 @@ function loadTasks() {
         }
     });
 }
-getInput();
 taskInput.addEventListener('keyup', (e) => {
     if(e.key === 'Enter' && completadas.classList.contains('active')) { //das click, se deteca el enter y si es que tab completadas esta con la clase activo y si el valor del input no esta vacio.
         tab.forEach((item) => item.classList.remove('active')); //se remueve la clase de tab completadas y se agrega la clase a tab todas
@@ -157,6 +156,8 @@ taskInput.addEventListener('keyup', (e) => {
         taskList.classList.add('active');// agrgar clase activa al tab content de tasklist
     }
 })
+getInput();
+
 
 
 

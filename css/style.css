@@ -21,7 +21,7 @@ body{
     appearance: none;
     border:none;
     outline: none;
-    padding: 10px 0px;
+    padding: 10px 10px;
     border-radius: 10px;
     cursor: pointer;
     font-family: "Prompt", serif;
@@ -67,7 +67,8 @@ text-align: center;
 header{
     padding: 10px;
     border-bottom: 1px solid rgb(237, 237, 237);
-    background: linear-gradient(to right, white, rgb(103, 86, 40))
+    background-color: rgb(255, 255, 255);
+    color: rgb(41, 41, 41);
 }
 ul{
     display: flex;
